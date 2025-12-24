@@ -25,8 +25,29 @@ POST http://localhost:3000/api/asset/create
 Content-Type: application/json
 
 {
-    "title": "Laptop",
-    "description": "A high-end gaming laptop",
-    "link": "www.google.com",
-    "mac":"Mac 1"
+    "title": "React boilerplate",
+    "description": "A simple react boilerplate",
+    "link": "www.react.com",
+    "mac":"Mac 3"
+}
+
+### GET ALL ASSETS
+GET http://localhost:3000/api/asset/all
+
+
+### GET ASSET BY MAC
+GET http://localhost:3000/api/asset/Mac 1
+
+
+### DELETE ASSET BY ID
+DELETE http://localhost:3000/api/asset/1
+
+
+### UPDATE ASSET BY ID
+PATCH http://localhost:3000/api/asset/2
+Content-Type: application/json
+
+{
+    "mac":"Mac 3"
+    
 }
