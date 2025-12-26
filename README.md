@@ -40,16 +40,16 @@ backend/
 
 ## 🏃‍➡️ How to run the project
 
-First is to install node modules
+1.First is to install node modules
 
 `npm install`
 
-**Then change the database connection string and credentials in env file as per your DB**
+2.**Then change the database connection string and credentials in env file as per your DB**
 
-Then run **script.ts**
+3.Then run **script.ts**
 
-Finally run this in terminal
+4.Finally run this in terminal
 
 `npm run dev`
 
-The app will run on localhost
+5.The app will run on localhost
