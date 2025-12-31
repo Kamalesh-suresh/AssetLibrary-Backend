@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { prisma } from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
+import { AuthRequest } from "../middleware/auth.middleware.js";
 
 export const register = async (req: Request, res: Response) => {
   try {

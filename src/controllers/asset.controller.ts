@@ -1,9 +1,13 @@
 import { Response, Request } from "express";
 import { prisma } from "../lib/prisma.js";
+import { AuthRequest } from "../middleware/auth.middleware.js";
 
-export const createAsset = async (req: Request, res: Response) => {
+export const createAsset = async (req: AuthRequest, res: Response) => {
   try {
     const { title, description, mac, link } = req.body;
+
+    const user = req.user;
+    console.log("User creating asset:", user);
     if (!title || !description || !mac || !link) {
       return res.status(400).json({ message: "All fields are required" });
     }

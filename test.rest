@@ -23,13 +23,16 @@ Content-Type: application/json
 ### POST CREATE ASSET
 POST http://localhost:3000/api/asset/create
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc2NzE1NjUwNiwiZXhwIjoxNzY3MTYwMTA2fQ.1-UsN7lDCmh6SHbw2UVlFccSzNP_58y_7y92s0K6W8M
+
 
 {
     "title": "React boilerplate",
-    "description": "A simple react boilerplate",
+    "description": "A simple new react boilerplate done in 2024 version 21",
     "link": "www.react.com",
-    "mac":"Mac 3"
+    "mac":"Mac 5"
 }
+
 
 ### GET ALL ASSETS
 GET http://localhost:3000/api/asset/all
