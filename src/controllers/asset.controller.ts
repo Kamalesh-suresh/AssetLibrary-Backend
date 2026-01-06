@@ -63,6 +63,25 @@ export const getAssetByMac = async (req: Request, res: Response) => {
   }
 };
 
+export const getAssetById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    console.log(typeof id);
+    const asset = await prisma.asset.findUnique({
+      where: { id: Number(id) },
+    });
+
+    console.log("Fetched asset by ID:", asset);
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
+    return res.status(200).json({ asset });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const deleteAsset = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
