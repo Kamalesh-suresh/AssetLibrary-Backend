@@ -17,7 +17,16 @@ Content-Type: application/json
 
 {
     "email": "test@example.com",
-    "password": "Password@123"  
+    "password": "Password@12"  
+}
+
+### POST RESET PASSWORD
+POST http://localhost:3000/api/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "newPassword": "Password@12"  
 }
 
 ### POST CREATE ASSET
