@@ -53,3 +53,9 @@ backend/
 `npm run dev`
 
 5.The app will run on localhost
+
+## 💌 Routes
+
+check the **test.rest** file for all the routes available and test it out easily
+
+
