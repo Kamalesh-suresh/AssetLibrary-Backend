@@ -32,14 +32,14 @@ Content-Type: application/json
 ### POST CREATE ASSET
 POST http://localhost:3000/api/asset/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoia2FtYWxAZ21haWwuY29tIiwiaWF0IjoxNzY3MzM1ODI4LCJleHAiOjE3NjczMzk0Mjh9.-_t_nFpewMBHcDw90TxHhIYNUMkNpOCp_hmQ3RNKVHA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc3MDgxNDg5NSwiZXhwIjoxNzcwODE4NDk1fQ.zIQkeu5wrkBS99dRMDoSqw9TlY-YrRlxOypZf_xAK4k
 
 
 {
     "title": "React boilerplate",
     "description": "A simple new react boilerplate done in 2024 version 21",
     "link": "https://www.react.com",
-    "mac":"Mac 10"
+    "mac":"Mac 8"
 }
 
 
@@ -48,7 +48,7 @@ GET http://localhost:3000/api/asset/all
 
 
 ### GET ASSET BY MAC
-GET http://localhost:3000/api/asset/Mac 1
+GET http://localhost:3000/api/asset/Mac 10
 
 
 ### DELETE ASSET BY ID
