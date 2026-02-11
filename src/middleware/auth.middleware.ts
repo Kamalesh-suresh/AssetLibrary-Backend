@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { env } from "../config/env.js";
 
 export interface AuthRequest extends Request {
   user?: {
@@ -16,20 +17,18 @@ export const authenticate = (
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return res.status(401).json({ message: "Authorization token missing" });
     }
 
     const token = authHeader.split(" ")[1];
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || "defaultsecret"
-    ) as { userId: number; email: string };
+    const decoded = jwt.verify(token, env.JWT_SECRET, {
+      algorithms: ["HS256"],
+    }) as { userId: number; email: string };
 
-    console.log("Decoded JWT:", decoded);
+    req.user = decoded;
 
-    req.user = decoded; // attach user info to request
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });

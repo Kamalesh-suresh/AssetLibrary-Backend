@@ -16,19 +16,23 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  firstName String
-  lastName  String
+  firstName String   @db.VarChar(100)
+  lastName  String   @db.VarChar(100)
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([email])
 }
 
 model Asset {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  link        String
-  mac         String
+  title       String   @db.VarChar(150)
+  description String   @db.Text
+  link        String   @db.VarChar(500)
+  mac         String   @unique @db.VarChar(17)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([mac])
 }

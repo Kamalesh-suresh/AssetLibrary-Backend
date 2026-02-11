@@ -7,7 +7,6 @@ export const createAsset = async (req: AuthRequest, res: Response) => {
     const { title, description, mac, link } = req.body;
 
     const user = req.user;
-    console.log("User creating asset:", user);
     if (!title || !description || !mac || !link) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -66,12 +65,10 @@ export const getAssetByMac = async (req: Request, res: Response) => {
 export const getAssetById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log(typeof id);
     const asset = await prisma.asset.findUnique({
       where: { id: Number(id) },
     });
 
-    console.log("Fetched asset by ID:", asset);
     if (!asset) {
       return res.status(404).json({ message: "Asset not found" });
     }

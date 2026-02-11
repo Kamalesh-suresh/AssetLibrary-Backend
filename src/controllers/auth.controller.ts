@@ -1,16 +1,47 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { prisma } from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
-import { AuthRequest } from "../middleware/auth.middleware.js";
+import { prisma } from "../lib/prisma.js";
+import { env } from "../config/env.js";
+import { z } from "zod";
+
+/* ============================
+   Validation Schemas
+============================ */
+
+const registerSchema = z.object({
+  email: z.string().email(),
+  firstName: z.string().min(1).max(100),
+  lastName: z.string().min(1).max(100),
+  password: z.string().min(8).max(100),
+});
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+const resetPasswordSchema = z.object({
+  email: z.string().email(),
+  newPassword: z.string().min(8).max(100),
+});
+
+/* ============================
+   Register
+============================ */
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { email, firstName, lastName, password } = req.body;
+    const parsed = registerSchema.safeParse(req.body);
 
-    if (!email || !firstName || !lastName || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Invalid input",
+        errors: parsed.error.flatten(),
+      });
     }
+
+    const { email, firstName, lastName, password } = parsed.data;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -20,7 +51,7 @@ export const register = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12); // stronger hash
 
     const user = await prisma.user.create({
       data: {
@@ -41,70 +72,102 @@ export const register = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    console.error("Register Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
+/* ============================
+   Login
+============================ */
+
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const parsed = loginSchema.safeParse(req.body);
 
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Invalid input",
+        errors: parsed.error.flatten(),
+      });
     }
+
+    const { email, password } = parsed.data;
 
     const user = await prisma.user.findUnique({
       where: { email },
     });
+
+    // Avoid user enumeration
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET || "defaultsecret",
-      { expiresIn: "1h" }
+      {
+        userId: user.id,
+        email: user.email,
+      },
+      env.JWT_SECRET,
+      {
+        expiresIn: env.JWT_EXPIRES_IN,
+        algorithm: "HS256",
+      }
     );
+
     return res.status(200).json({
       message: "Login successful",
       token,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Login Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
+/* ============================
+   Reset Password
+============================ */
+
 export const resetPassword = async (req: Request, res: Response) => {
   try {
-    const { email, newPassword } = req.body;
-    if (!email || !newPassword) {
-      return res
-        .status(400)
-        .json({ message: "Email and new password are required" });
+    const parsed = resetPasswordSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Invalid input",
+        errors: parsed.error.flatten(),
+      });
     }
+
+    const { email, newPassword } = parsed.data;
+
     const user = await prisma.user.findUnique({
       where: { email },
     });
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
     await prisma.user.update({
       where: { email },
       data: { password: hashedPassword },
     });
-    return res
-      .status(200)
-      .json({ message: "Password has been reset successfully" });
+
+    return res.status(200).json({
+      message: "Password reset successfully",
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Reset Password Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
