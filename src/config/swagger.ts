@@ -54,6 +54,53 @@ const options: swaggerJsDoc.Options = {
             link: { type: "string" },
           },
         },
+
+        // Auth
+        RegisterRequest: {
+          type: "object",
+          required: ["email", "firstName", "lastName", "password"],
+          properties: {
+            email: {
+              type: "string",
+              format: "email",
+              example: "user@example.com",
+            },
+            firstName: { type: "string", example: "John" },
+            lastName: { type: "string", example: "Doe" },
+            password: { type: "string", example: "StrongPass123" },
+          },
+        },
+        LoginRequest: {
+          type: "object",
+          required: ["email", "password"],
+          properties: {
+            email: {
+              type: "string",
+              format: "email",
+              example: "user@example.com",
+            },
+            password: { type: "string", example: "StrongPass123" },
+          },
+        },
+        ResetPasswordRequest: {
+          type: "object",
+          required: ["email", "newPassword"],
+          properties: {
+            email: {
+              type: "string",
+              format: "email",
+              example: "user@example.com",
+            },
+            newPassword: { type: "string", example: "NewStrongPass123" },
+          },
+        },
+        AuthResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Login successful" },
+            token: { type: "string", example: "eyJhbGciOiJIUzI1NiIsIn..." },
+          },
+        },
       },
     },
 
