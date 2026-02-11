@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
     "email": "test@example.com",
-    "password": "Password@12"  
+    "password": "Password@123"  
 }
 
 ### POST RESET PASSWORD

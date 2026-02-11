@@ -30,7 +30,7 @@ model Asset {
   title       String   @db.VarChar(150)
   description String   @db.Text
   link        String   @db.VarChar(500)
-  mac         String   @unique @db.VarChar(17)
+  mac         String   @db.VarChar(17)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
