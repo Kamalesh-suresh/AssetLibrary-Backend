@@ -31,16 +31,16 @@ const options: swaggerJsDoc.Options = {
             id: { type: "integer", example: 1 },
             title: { type: "string", example: "MacBook Pro" },
             description: { type: "string", example: "Developer laptop" },
-            mac: { type: "string", example: "AA:BB:CC:DD:EE:FF" },
+            mac: { type: "string", example: "Mac 1" },
             link: { type: "string", example: "https://apple.com" },
-            createdAt: {
-              type: "string",
-              format: "date-time",
-            },
-            updatedAt: {
-              type: "string",
-              format: "date-time",
-            },
+            // createdAt: {
+            //   type: "string",
+            //   format: "date-time",
+            // },
+            // updatedAt: {
+            //   type: "string",
+            //   format: "date-time",
+            // },
           },
         },
 
@@ -119,33 +119,3 @@ const swaggerSpec = swaggerJsDoc(options);
 export const setupSwagger = (app: Express) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Asset:
- *       type: object
- *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *         title:
- *           type: string
- *           example: Laptop Dell
- *         description:
- *           type: string
- *           example: Office laptop
- *         mac:
- *           type: string
- *           example: AA:BB:CC:DD:EE:FF
- *         link:
- *           type: string
- *           example: https://example.com
- *         createdAt:
- *           type: string
- *           format: date-time
- *         updatedAt:
- *           type: string
- *           format: date-time
- */
