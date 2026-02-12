@@ -1,6 +1,8 @@
 import { z } from "zod";
 import type { StringValue } from "ms";
 
+import "dotenv/config";
+
 const envSchema = z.object({
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRES_IN: z.custom<StringValue>().default("1h"),
