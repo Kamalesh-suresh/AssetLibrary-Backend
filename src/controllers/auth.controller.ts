@@ -5,10 +5,6 @@ import { prisma } from "../lib/prisma.js";
 import { env } from "../config/env.js";
 import { z } from "zod";
 
-/* ============================
-   Validation Schemas
-============================ */
-
 const registerSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1).max(100),
@@ -25,10 +21,6 @@ const resetPasswordSchema = z.object({
   email: z.string().email(),
   newPassword: z.string().min(8).max(100),
 });
-
-/* ============================
-   Register
-============================ */
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -51,7 +43,7 @@ export const register = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12); // stronger hash
+    const hashedPassword = await bcrypt.hash(password, 12); 
 
     const user = await prisma.user.create({
       data: {
@@ -76,10 +68,6 @@ export const register = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-/* ============================
-   Login
-============================ */
 
 export const login = async (req: Request, res: Response) => {
   try {
@@ -130,10 +118,6 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-/* ============================
-   Reset Password
-============================ */
 
 export const resetPassword = async (req: Request, res: Response) => {
   try {

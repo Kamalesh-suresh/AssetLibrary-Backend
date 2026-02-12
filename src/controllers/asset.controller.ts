@@ -2,9 +2,7 @@ import { Response, Request } from "express";
 import { prisma } from "../lib/prisma.js";
 import { AuthRequest } from "../middleware/auth.middleware.js";
 
-/* ======================
-   Helpers
-====================== */
+//helpers
 
 const parseId = (id: string) => {
   const parsed = Number(id);
@@ -13,9 +11,7 @@ const parseId = (id: string) => {
 
 
 
-/* ======================
-   Create Asset
-====================== */
+
 
 export const createAsset = async (req: AuthRequest, res: Response) => {
   try {
@@ -44,9 +40,7 @@ export const createAsset = async (req: AuthRequest, res: Response) => {
   }
 };
 
-/* ======================
-   Get All Assets
-====================== */
+
 
 export const getAssets = async (_req: Request, res: Response) => {
   try {
@@ -64,9 +58,7 @@ export const getAssets = async (_req: Request, res: Response) => {
   }
 };
 
-/* ======================
-   Get Asset By MAC
-====================== */
+
 
 export const getAssetByMac = async (req: Request, res: Response) => {
   try {
@@ -94,9 +86,7 @@ export const getAssetByMac = async (req: Request, res: Response) => {
   }
 };
 
-/* ======================
-   Get Asset By ID
-====================== */
+
 
 export const getAssetById = async (req: Request, res: Response) => {
   try {
@@ -121,9 +111,7 @@ export const getAssetById = async (req: Request, res: Response) => {
   }
 };
 
-/* ======================
-   Update Asset
-====================== */
+
 
 export const updateAsset = async (req: Request, res: Response) => {
   try {
@@ -166,9 +154,7 @@ export const updateAsset = async (req: Request, res: Response) => {
   }
 };
 
-/* ======================
-   Delete Asset
-====================== */
+
 
 export const deleteAsset = async (req: Request, res: Response) => {
   try {
